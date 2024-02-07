@@ -5,5 +5,5 @@ type TProps = {
 };
 
 export default function FormBuilderLayout({ children }: TProps) {
-  return <div>{children}</div>;
+  return <div className="flex w-full flex-grow mx-auto">{children}</div>;
 }

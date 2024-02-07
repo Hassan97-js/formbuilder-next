@@ -131,3 +131,34 @@ export async function getForms() {
     throw new Error("Internal Server Error");
   }
 }
+
+export async function getFormById(id: string) {
+  noStore();
+
+  try {
+    const user = await getCurrentUser();
+
+    if (!user) {
+      throw new Error("Unauthorized");
+    }
+
+    // await new Promise((res) =>
+    //   setTimeout(() => {
+    //     res(null);
+    //   }, 4000)
+    // );
+
+    const form = await prisma.form.findUnique({
+      where: {
+        userId: user.id,
+        id
+      }
+    });
+
+    return form;
+  } catch (error) {
+    console.error(error);
+
+    throw new Error("Internal Server Error");
+  }
+}

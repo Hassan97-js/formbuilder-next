@@ -1,11 +1,21 @@
+import { notFound } from "next/navigation";
+
+import FormBuilder from "@/components/form/form-builder";
+
+import { getFormById } from "@/actions/form.actions";
+
 type TProps = {
   params: {
     id: string;
   };
 };
 
-export default function FormBuilderByIdPage({ params: { id } }: TProps) {
-  console.log(id);
+export default async function FormBuilderByIdPage({ params: { id } }: TProps) {
+  const form = await getFormById(id);
 
-  return <div>Form Builder By Id Page</div>;
+  if (!form) {
+    return notFound();
+  }
+
+  return <FormBuilder form={form} />;
 }
