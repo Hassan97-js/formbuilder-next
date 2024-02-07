@@ -20,11 +20,11 @@ export const metadata: Metadata = {
   description: "This is a short description of FormBuilder"
 };
 
-export default function RootLayout({
-  children
-}: Readonly<{
+type TProps = Readonly<{
   children: React.ReactNode;
-}>) {
+}>;
+
+export default function RootLayout({ children }: TProps) {
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>

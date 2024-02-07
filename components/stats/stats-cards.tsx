@@ -12,13 +12,12 @@ export async function StatsCardWrapper() {
   return <StatsCards loading={false} data={stats} />;
 }
 
-export async function StatsCards({
-  loading,
-  data
-}: {
+type TStatsCardsProps = {
   loading: boolean;
   data?: Awaited<ReturnType<typeof getFormStats>>;
-}) {
+};
+
+export async function StatsCards({ loading, data }: TStatsCardsProps) {
   return (
     <div className="w-full pt-8 gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       <StatsCard
@@ -57,6 +56,15 @@ export async function StatsCards({
   );
 }
 
+type TStatsCardProps = {
+  title: string;
+  icon: JSX.Element;
+  description: string;
+  value?: string;
+  loading: boolean;
+  className?: string;
+};
+
 export function StatsCard({
   title,
   description,
@@ -64,14 +72,7 @@ export function StatsCard({
   value,
   loading,
   className
-}: {
-  title: string;
-  icon: JSX.Element;
-  description: string;
-  value?: string;
-  loading: boolean;
-  className?: string;
-}) {
+}: TStatsCardProps) {
   return (
     <Card className={className}>
       <CardHeader className="flex flex-row items-center justify-between pb-2">

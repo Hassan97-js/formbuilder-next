@@ -31,7 +31,9 @@ export async function FormCards() {
   });
 }
 
-export function FormCard({ form }: { form: Form }) {
+type TFormCardProps = { form: Form };
+
+export function FormCard({ form }: TFormCardProps) {
   return (
     <Card className="min-h-48">
       <CardHeader className="space-y-3">
