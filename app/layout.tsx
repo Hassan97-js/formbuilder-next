@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter as FontSans } from "next/font/google";
 
-import { ThemeProvider } from "@/components/providers/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
+
+import ContextProviders from "@/components/providers/context-providers";
+
 import { cn } from "@/lib/utils";
 
 import "../styles/globals.css";
@@ -30,13 +33,16 @@ export default function RootLayout({
             "min-h-screen bg-background font-sans antialiased",
             fontSans.variable
           )}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange>
+          <ContextProviders
+            themeProps={{
+              attribute: "class",
+              defaultTheme: "system",
+              enableSystem: true,
+              disableTransitionOnChange: true
+            }}>
             {children}
-          </ThemeProvider>
+          </ContextProviders>
+          <Toaster richColors />
         </body>
       </html>
     </ClerkProvider>

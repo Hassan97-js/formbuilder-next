@@ -1,67 +1,31 @@
-import { LuView } from "react-icons/lu";
+import { Suspense } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getFormStats } from "@/actions/form.actions";
+import { Separator } from "@/components/ui/separator";
+
+import CreateFormButton from "@/components/create-form-button";
+import { StatsCardWrapper, StatsCards } from "@/components/stats/stats-cards";
+import { FormCardSkeleton, FormCards } from "@/components/form/form-card";
 
 export default function Home() {
   return (
     <main className="container min-h-screen">
-      <CardStatsWrapper />
+      <Suspense fallback={<StatsCards loading={true} />}>
+        <StatsCardWrapper />
+      </Suspense>
+
+      <Separator className="my-20" />
+
+      <h2 className="text-4xl font-bold mb-12">Your Forms</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-8">
+        <CreateFormButton />
+        <Suspense
+          fallback={[1, 2, 3, 4].map((el) => (
+            <FormCardSkeleton key={el} />
+          ))}>
+          <FormCards />
+        </Suspense>
+      </div>
     </main>
-  );
-}
-
-async function CardStatsWrapper() {
-  const stats = await getFormStats();
-
-  return <StatsCards loading={false} data={stats} />;
-}
-
-async function StatsCards({
-  loading,
-  data
-}: {
-  loading: boolean;
-  data: Awaited<ReturnType<typeof getFormStats>>;
-}) {
-  return (
-    <div className="w-full pt-8 gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-      <StatsCard
-        title="Visits"
-        icon={<LuView className="text-blue-600" />}
-        helperText="All time form visits"
-        value={data.visits.toLocaleString()}
-        loading={loading}
-        className="shadow-md shadow-blue-600"
-      />
-    </div>
-  );
-}
-
-function StatsCard({
-  title,
-  helperText,
-  icon,
-  value,
-  loading,
-  className
-}: {
-  title: string;
-  icon: JSX.Element;
-  helperText: string;
-  value: string;
-  loading: boolean;
-  className?: string;
-}) {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        {icon}
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">Skeleton or Content</div>
-      </CardContent>
-    </Card>
   );
 }

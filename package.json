@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:mg": "npx prisma migrate dev",
+    "prisma:st": "npx prisma studio --browser none",
+    "prisma:gn": "npx prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.6",
