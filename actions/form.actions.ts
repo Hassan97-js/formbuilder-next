@@ -67,6 +67,8 @@ export async function createForm(values: TCreateForm) {
       throw new Error("Unauthorized");
     }
 
+    console.log("RUN---");
+
     const { name, description } = values;
 
     const form = await prisma.form.findFirst({
@@ -115,6 +117,8 @@ export async function getForms() {
       throw new Error("Unauthorized");
     }
 
+    console.log("RUN---");
+
     const forms = await prisma.form.findMany({
       where: {
         userId: user.id
@@ -123,6 +127,8 @@ export async function getForms() {
         createdAt: "desc"
       }
     });
+
+    console.log(forms);
 
     return forms;
   } catch (error) {
