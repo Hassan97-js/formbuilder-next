@@ -124,8 +124,6 @@ export async function getForms() {
       }
     });
 
-    console.log(forms);
-
     return forms;
   } catch (error) {
     console.error(error);

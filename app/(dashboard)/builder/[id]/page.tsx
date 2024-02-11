@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import FormBuilder from "@/components/form/form-builder";
+import FormBuilder from "@/components/builder/form-builder";
 
 import { getFormById } from "@/actions/form.actions";
 
