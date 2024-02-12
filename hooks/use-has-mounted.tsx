@@ -8,7 +8,7 @@ export default function useHasMounted() {
   }, []);
 
   if (!hasMounted) {
-    return null;
+    return false;
   }
 
   return hasMounted;

@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import { Monitor, MoonIcon, SunIcon } from "lucide-react";
 
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
-import useHasMounted from "./hooks/use-has-mounted";
+import useHasMounted from "../hooks/use-has-mounted";
 
 export default function ThemeSwitcher() {
   const { setTheme, theme } = useTheme();

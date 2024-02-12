@@ -3,13 +3,13 @@
 import { MdTextFields } from "react-icons/md";
 
 import {
-  type TBuilderElement,
-  type TBuilderElementTypes
+  type TFormBuilderElement,
+  type TFormBuilderElementTypes
 } from "../form-builder-elements";
 
-const type: TBuilderElementTypes = "TextField";
+const type: TFormBuilderElementTypes = "TextField";
 
-export const TextField: TBuilderElement = {
+export const TextField: TFormBuilderElement = {
   construct: (id: string) => ({
     id,
     type,
@@ -21,7 +21,7 @@ export const TextField: TBuilderElement = {
     }
   }),
   designerButton: {
-    icon: MdTextFields,
+    Icon: MdTextFields,
     label: "Text Field"
   },
   type: "TextField",

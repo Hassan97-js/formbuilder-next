@@ -12,13 +12,13 @@ type TProps = {
 
 export default function Error({ error, reset }: TProps) {
   useEffect(() => {
-    console.error(error);
+    console.error(error.message);
   }, [error]);
 
   return (
     <div className="w-full flex flex-col gap-7 justify-center items-center">
       <h2 className="text-red-500/85 text-3xl font-bold">
-        {error.message ? error.message : "Something went wrong!"}
+        Something went wrong!
       </h2>
       <div className="flex gap-3 items-center">
         <Button onClick={() => reset()}>Try again</Button>
