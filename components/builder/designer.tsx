@@ -7,6 +7,7 @@ import {
   FormBuilderElements,
   type TFormBuilderElementTypes
 } from "./form-builder-elements";
+import DesignerElement from "./designer-element";
 
 import { useDesigner } from "@/context/designer-context";
 import { cn, generateUUID } from "@/lib/utils";
@@ -62,7 +63,7 @@ function Designer() {
         {elements.length > 0 && (
           <div className="flex flex-col text-background w-full gap-2 p-4">
             {elements.map((el) => {
-              return <DesignerElement key={el.id} element={element} />;
+              return <DesignerElement key={el.id} element={el} />;
             })}
           </div>
         )}

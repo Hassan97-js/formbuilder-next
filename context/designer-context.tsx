@@ -14,7 +14,7 @@ type TDesignerContext = {
 
 export const DesignerContext = createContext<TDesignerContext | null>(null);
 
-function DesignerContextProvider({ children }: TProps) {
+export function DesignerContextProvider({ children }: TProps) {
   const [elements, setElements] = useState<TDesignerFormElement[]>([]);
 
   function handleAddElement(index: number, element: TDesignerFormElement) {
@@ -47,5 +47,3 @@ export function useDesigner() {
 
   return context;
 }
-
-export default DesignerContext;

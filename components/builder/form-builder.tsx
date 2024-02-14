@@ -10,7 +10,7 @@ import SaveFormButton from "../buttons/save-form-button";
 import PublishFormButton from "../buttons/publish-form-button";
 import DragOverlayWrapper from "./drag-overlay-wrapper";
 
-import DesignerContextProvider from "@/context/designer-context";
+import { DesignerContextProvider } from "@/context/designer-context";
 
 type TProps = {
   form: TForm;

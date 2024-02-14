@@ -4,7 +4,7 @@ import { Inter as FontSans } from "next/font/google";
 
 import { Toaster } from "@/components/ui/sonner";
 
-import ContextProviders from "@/providers/context-providers";
+import { ContextProviders } from "@/providers/context-providers";
 
 import { cn } from "@/lib/utils";
 

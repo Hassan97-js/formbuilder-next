@@ -10,8 +10,9 @@ type TContextProvidersProps = {
   children: ReactNode;
 };
 
-function ContextProviders({ children, themeProps }: TContextProvidersProps) {
+export function ContextProviders({
+  children,
+  themeProps
+}: TContextProvidersProps) {
   return <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>;
 }
-
-export default ContextProviders;
