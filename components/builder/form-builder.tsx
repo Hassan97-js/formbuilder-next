@@ -10,11 +10,13 @@ import SaveFormButton from "../buttons/save-form-button";
 import PublishFormButton from "../buttons/publish-form-button";
 import DragOverlayWrapper from "./drag-overlay-wrapper";
 
+import DesignerContextProvider from "@/context/designer-context";
+
 type TProps = {
   form: TForm;
 };
 
-export default function FormBuilder({ form }: TProps) {
+function FormBuilder({ form }: TProps) {
   const id = useId();
 
   return (
@@ -36,10 +38,14 @@ export default function FormBuilder({ form }: TProps) {
       </nav>
       <div className="flex w-full flex-1 items-center justify-center relative h-[12.5rem] bg-accent bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)]">
         <DndContext id={id}>
-          <Designer />
-          <DragOverlayWrapper />
+          <DesignerContextProvider>
+            <Designer />
+            <DragOverlayWrapper />
+          </DesignerContextProvider>
         </DndContext>
       </div>
     </div>
   );
 }
+
+export default FormBuilder;

@@ -33,7 +33,7 @@ import {
   type TCreateForm
 } from "@/constants/validators/form.validator";
 
-export default function CreateFormButton() {
+function CreateFormButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<TCreateForm>({
@@ -141,3 +141,5 @@ export default function CreateFormButton() {
     </Dialog>
   );
 }
+
+export default CreateFormButton;

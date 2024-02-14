@@ -6,7 +6,7 @@ import { Monitor, MoonIcon, SunIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import useHasMounted from "../hooks/use-has-mounted";
 
-export default function ThemeSwitcher() {
+function ThemeSwitcher() {
   const { setTheme, theme } = useTheme();
   const hasMounted = useHasMounted();
 
@@ -30,3 +30,5 @@ export default function ThemeSwitcher() {
     </Tabs>
   );
 }
+
+export default ThemeSwitcher;

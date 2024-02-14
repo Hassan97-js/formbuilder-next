@@ -1,5 +1,7 @@
 import { SignIn as ClerkSignIn } from "@clerk/nextjs";
 
-export default function SignIn() {
+function SignIn() {
   return <ClerkSignIn />;
 }
+
+export default SignIn;

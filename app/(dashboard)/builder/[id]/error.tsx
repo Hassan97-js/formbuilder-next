@@ -10,7 +10,7 @@ type TProps = {
   reset: () => void;
 };
 
-export default function Error({ error, reset }: TProps) {
+function Error({ error, reset }: TProps) {
   useEffect(() => {
     console.error(error.message);
   }, [error]);
@@ -30,3 +30,5 @@ export default function Error({ error, reset }: TProps) {
     </div>
   );
 }
+
+export default Error;

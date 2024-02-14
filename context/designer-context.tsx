@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, createContext, useState } from "react";
+import { type ReactNode, createContext, useState, useContext } from "react";
 import { type TDesignerFormElement } from "@/components/builder/form-builder-elements";
 
 type TProps = {
@@ -14,11 +14,17 @@ type TDesignerContext = {
 
 export const DesignerContext = createContext<TDesignerContext | null>(null);
 
-export default function DesignerContextProvider({ children }: TProps) {
+function DesignerContextProvider({ children }: TProps) {
   const [elements, setElements] = useState<TDesignerFormElement[]>([]);
 
-  // Todo: Continue with handleAddElement
-  function handleAddElement(index: number, element: TDesignerFormElement) {}
+  function handleAddElement(index: number, element: TDesignerFormElement) {
+    setElements((prevElements) => {
+      const elementsCopy = [...prevElements];
+      elementsCopy.splice(index, 0, element);
+
+      return elementsCopy;
+    });
+  }
 
   const contextValue = {
     elements,
@@ -31,3 +37,15 @@ export default function DesignerContextProvider({ children }: TProps) {
     </DesignerContext.Provider>
   );
 }
+
+export function useDesigner() {
+  const context = useContext(DesignerContext);
+
+  if (!context) {
+    throw Error("useDesigner must be used within DesignerContext Provider");
+  }
+
+  return context;
+}
+
+export default DesignerContext;

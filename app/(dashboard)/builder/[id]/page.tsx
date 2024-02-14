@@ -10,7 +10,7 @@ type TProps = {
   };
 };
 
-export default async function FormBuilderByIdPage({ params: { id } }: TProps) {
+async function FormBuilderByIdPage({ params: { id } }: TProps) {
   const form = await getFormById(id);
 
   if (!form) {
@@ -19,3 +19,5 @@ export default async function FormBuilderByIdPage({ params: { id } }: TProps) {
 
   return <FormBuilder form={form} />;
 }
+
+export default FormBuilderByIdPage;

@@ -7,7 +7,7 @@ import {
   TFormBuilderElementTypes
 } from "./form-builder-elements";
 
-export default function DragOverlayWrapper() {
+function DragOverlayWrapper() {
   const [draggedItem, setDraggedItem] = useState<null | Active>(null);
 
   useDndMonitor({
@@ -35,3 +35,5 @@ export default function DragOverlayWrapper() {
 
   return <DragOverlay>{node}</DragOverlay>;
 }
+
+export default DragOverlayWrapper;

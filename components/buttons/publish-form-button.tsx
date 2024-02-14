@@ -1,7 +1,7 @@
 import { Button } from "../ui/button";
 import { MdOutlinePublish } from "react-icons/md";
 
-export default function PublishFormButton() {
+function PublishFormButton() {
   return (
     <Button
       variant="none"
@@ -11,3 +11,5 @@ export default function PublishFormButton() {
     </Button>
   );
 }
+
+export default PublishFormButton;

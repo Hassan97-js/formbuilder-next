@@ -4,7 +4,7 @@ import { UserButton } from "@clerk/nextjs";
 
 import ThemeSwitcher from "../theme-switcher";
 
-export default function NavItems() {
+function NavItems() {
   return (
     <div className="flex items-center gap-5">
       <ThemeSwitcher />
@@ -14,3 +14,5 @@ export default function NavItems() {
     </div>
   );
 }
+
+export default NavItems;

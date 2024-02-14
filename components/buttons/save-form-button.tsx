@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 
 import { HiSave } from "react-icons/hi";
 
-export default function SaveFormButton() {
+function SaveFormButton() {
   return (
     <Button variant="outline" className="gap-2">
       <HiSave className="w-4 h-4 mt-[1px]" />
@@ -10,3 +10,5 @@ export default function SaveFormButton() {
     </Button>
   );
 }
+
+export default SaveFormButton;

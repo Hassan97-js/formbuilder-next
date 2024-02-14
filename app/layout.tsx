@@ -24,7 +24,7 @@ type TProps = Readonly<{
   children: React.ReactNode;
 }>;
 
-export default function RootLayout({ children }: TProps) {
+function RootLayout({ children }: TProps) {
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
@@ -48,3 +48,5 @@ export default function RootLayout({ children }: TProps) {
     </ClerkProvider>
   );
 }
+
+export default RootLayout;

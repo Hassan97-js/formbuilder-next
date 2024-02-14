@@ -8,7 +8,7 @@ type TProps = {
   formElement: TFormBuilderElement;
 };
 
-export default function SidebarButtonElement({ formElement }: TProps) {
+function SidebarButtonElement({ formElement }: TProps) {
   const { Icon, label } = formElement.designerButton;
 
   const { setNodeRef, listeners, attributes, isDragging } = useDraggable({
@@ -37,7 +37,7 @@ export default function SidebarButtonElement({ formElement }: TProps) {
 export function SidebarButtonDragOverlay({ formElement }: TProps) {
   const { Icon, label } = formElement.designerButton;
 
-  const { setNodeRef, isDragging } = useDraggable({
+  const { setNodeRef } = useDraggable({
     id: `designer-button-${formElement.type}`,
     data: {
       type: formElement.type,
@@ -55,3 +55,5 @@ export function SidebarButtonDragOverlay({ formElement }: TProps) {
     </Button>
   );
 }
+
+export default SidebarButtonElement;

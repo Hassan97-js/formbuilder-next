@@ -4,6 +4,8 @@ type TProps = {
   children: ReactNode;
 };
 
-export default function FormBuilderLayout({ children }: TProps) {
+function FormBuilderLayout({ children }: TProps) {
   return <div className="flex w-full flex-1 mx-auto">{children}</div>;
 }
+
+export default FormBuilderLayout;

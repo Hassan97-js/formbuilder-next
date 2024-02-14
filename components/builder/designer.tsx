@@ -1,17 +1,43 @@
 "use client";
 
-import { useDroppable } from "@dnd-kit/core";
+import { useDndMonitor, useDroppable } from "@dnd-kit/core";
 
 import DesignerSidebar from "./designer-sidebar";
+import {
+  FormBuilderElements,
+  type TFormBuilderElementTypes
+} from "./form-builder-elements";
 
-import { cn } from "@/lib/utils";
-import { type TDesignerFormElement } from "./form-builder-elements";
+import { useDesigner } from "@/context/designer-context";
+import { cn, generateUUID } from "@/lib/utils";
 
-export default function Designer() {
+function Designer() {
+  const { addElement, elements } = useDesigner();
   const { setNodeRef, isOver } = useDroppable({
     id: "designer-drop-area",
     data: {
       isDesignerDropArea: true
+    }
+  });
+
+  useDndMonitor({
+    onDragEnd: (e) => {
+      const { active, over } = e;
+      if (!active || !over) {
+        return;
+      }
+
+      const current = active?.data?.current;
+      const isDesignerButton = current?.isDesignerButtonElement;
+
+      if (isDesignerButton) {
+        const type = current?.type as TFormBuilderElementTypes;
+        const newElement = FormBuilderElements[type].construct(generateUUID());
+
+        addElement(0, newElement);
+      }
+
+      console.log("[DRAG-END-EVENT]", e);
     }
   });
 
@@ -33,9 +59,18 @@ export default function Designer() {
         {isOver && (
           <div className="p-4 w-full h-[7.5rem] rounded-md bg-primary/20"></div>
         )}
+        {elements.length > 0 && (
+          <div className="flex flex-col text-background w-full gap-2 p-4">
+            {elements.map((el) => {
+              return <DesignerElement key={el.id} element={element} />;
+            })}
+          </div>
+        )}
       </div>
 
       <DesignerSidebar />
     </div>
   );
 }
+
+export default Designer;

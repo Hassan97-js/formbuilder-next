@@ -6,7 +6,7 @@ import CreateFormButton from "@/components/create-form-button";
 import { StatsCardWrapper, StatsCards } from "@/components/stats/stats-cards";
 import { FormCardSkeleton, FormCards } from "@/components/form/form-card";
 
-export default function Home() {
+function Home() {
   return (
     <main className="container min-h-screen">
       <Suspense fallback={<StatsCards loading={true} />}>
@@ -29,3 +29,5 @@ export default function Home() {
     </main>
   );
 }
+
+export default Home;
