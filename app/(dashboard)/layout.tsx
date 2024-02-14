@@ -8,7 +8,7 @@ type TProps = { children: ReactNode };
 function DashboardLayout({ children }: TProps) {
   return (
     <div className="flex flex-col min-h-screen min-w-full bg-background">
-      <nav className="flex justify-between items-center border-b  border-border h-[3.75rem] px-4 py-2">
+      <nav className="flex justify-between items-center border-b border-border h-[3.75rem] px-4 py-2">
         <Logo />
         <NavItems />
       </nav>
