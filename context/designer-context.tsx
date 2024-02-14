@@ -9,7 +9,7 @@ type TProps = {
 
 type TDesignerContext = {
   elements: TDesignerFormElement[];
-  addElement: (index: number, element: TDesignerFormElement) => void;
+  addElement: (element: TDesignerFormElement) => void;
 };
 
 export const DesignerContext = createContext<TDesignerContext | null>(null);
@@ -17,10 +17,10 @@ export const DesignerContext = createContext<TDesignerContext | null>(null);
 export function DesignerContextProvider({ children }: TProps) {
   const [elements, setElements] = useState<TDesignerFormElement[]>([]);
 
-  function handleAddElement(index: number, element: TDesignerFormElement) {
+  function handleAddElement(element: TDesignerFormElement) {
     setElements((prevElements) => {
       const elementsCopy = [...prevElements];
-      elementsCopy.splice(index, 0, element);
+      elementsCopy.push(element);
 
       return elementsCopy;
     });

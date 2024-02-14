@@ -1,5 +1,5 @@
-import { InputHTMLAttributes } from "react";
-import { IconType } from "react-icons/lib";
+import { type InputHTMLAttributes } from "react";
+import { type IconType } from "react-icons/lib";
 
 import { TextField } from "./fields/text-field";
 
@@ -12,7 +12,9 @@ export type TFormBuilderElement = {
     Icon: IconType;
     label: string;
   };
-  DesignerComponent: React.FunctionComponent;
+  DesignerComponent: React.FunctionComponent<{
+    element: TDesignerFormElement;
+  }>;
   FormComponent: React.FunctionComponent;
   PropertiesComponent: React.FunctionComponent;
 };
@@ -20,7 +22,10 @@ export type TFormBuilderElement = {
 export type TDesignerFormElement = {
   id: string;
   type: TFormBuilderElementTypes;
-  otherAttributes?: InputHTMLAttributes<HTMLInputElement>;
+  otherAttributes?: InputHTMLAttributes<HTMLInputElement> & {
+    label: string;
+    description: string;
+  };
 };
 
 type TFormBuilderElements = {
