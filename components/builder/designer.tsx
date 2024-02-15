@@ -24,6 +24,7 @@ function Designer() {
   useDndMonitor({
     onDragEnd: (e) => {
       const { active, over } = e;
+
       if (!active || !over) {
         return;
       }
@@ -45,7 +46,7 @@ function Designer() {
       <div
         ref={setNodeRef}
         className={cn(
-          "bg-background max-w-[112.5rem] w-full m-auto rounded-xl flex flex-col flex-[2] items-center justify-start overflow-y-auto h-full",
+          "bg-background max-w-[112.5rem] w-full m-auto rounded-xl flex flex-col flex-[2] items-center justify-start overflow-y-auto h-[70.25rem]",
           {
             "ring-2 ring-primary/20": isOver
           }
@@ -59,7 +60,7 @@ function Designer() {
           <div className="p-4 w-full h-[7.5rem] rounded-md bg-primary/20"></div>
         )}
         {elements.length > 0 && (
-          <div className="flex flex-col w-full gap-2 p-4">
+          <div className="flex flex-col w-full gap-2 p-5">
             {elements.map((el) => {
               return <DesignerElementWrapper key={el.id} element={el} />;
             })}
