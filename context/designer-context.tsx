@@ -10,6 +10,7 @@ type TProps = {
 type TDesignerContext = {
   elements: TDesignerFormElement[];
   addElement: (element: TDesignerFormElement) => void;
+  removeElement: (elementId: string) => void;
 };
 
 export const DesignerContext = createContext<TDesignerContext | null>(null);
@@ -26,9 +27,16 @@ export function DesignerContextProvider({ children }: TProps) {
     });
   }
 
+  function handleRemoveElement(elementId: string) {
+    setElements((prevElements) => {
+      return prevElements.filter((el) => el.id !== elementId);
+    });
+  }
+
   const contextValue = {
     elements,
-    addElement: handleAddElement
+    addElement: handleAddElement,
+    removeElement: handleRemoveElement
   } satisfies TDesignerContext;
 
   return (
