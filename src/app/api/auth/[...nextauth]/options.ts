@@ -1,7 +1,15 @@
+import bcrypt from "bcrypt";
 import { type AuthOptions } from "next-auth";
+import { type Adapter } from "next-auth/adapters";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+
 import Credentials from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+
+import db from "@/utils/prisma";
+
+import { getUserByEmail, saveUserToDB } from "@/utils/user";
 
 export const authOptions = {
   session: {
@@ -30,29 +38,55 @@ export const authOptions = {
           type: "password"
         }
       },
-      authorize(credentials) {
-        // Todo: Get user from DB
-        const user = {
-          id: "1",
-          name: "Hassan",
-          email: "hassan@dev.com",
-          password: "123123"
-        };
+      async authorize(credentials) {
+        const user = await getUserByEmail(credentials?.email);
 
-        if (
-          credentials?.email === user.email &&
-          credentials.password === user.password
-        ) {
-          return user;
+        if (user) {
+          const isMatch = bcrypt.compareSync(
+            String(credentials?.password),
+            String(user.password)
+          );
+
+          if (isMatch) {
+            return user;
+          }
+
+          return null;
+        }
+
+        if (!user) {
+          const newUser = await saveUserToDB(
+            credentials?.email,
+            credentials?.password
+          );
+
+          return newUser;
         }
 
         return null;
       }
     })
   ],
+  callbacks: {
+    jwt({ token, user, account }) {
+      if (account) {
+        token.id = user.id;
+      }
+
+      return token;
+    },
+    session({ token, session }) {
+      if (token.id) {
+        session.user.id = token.id;
+      }
+
+      return session;
+    }
+  },
   pages: {
     signIn: "/auth/sign-in",
     error: "/auth/error",
     signOut: "/"
-  }
+  },
+  adapter: PrismaAdapter(db) as Adapter
 } satisfies AuthOptions;

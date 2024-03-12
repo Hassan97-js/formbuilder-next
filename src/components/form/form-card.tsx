@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { type Form } from "@prisma/client";
 import { formatDistance } from "date-fns";
 import { Eye, HardDriveUpload } from "lucide-react";
@@ -14,10 +15,9 @@ import {
   CardTitle
 } from "../ui/card";
 import { Badge } from "../ui/badge";
-
-import { getForms } from "@/lib/form.actions";
 import { Button } from "../ui/button";
-import Link from "next/link";
+
+import { getForms } from "@/utils/actions/builder";
 
 export function FormCardSkeleton() {
   return <Skeleton className="border-2 border-primary/20 h-48 w-full" />;

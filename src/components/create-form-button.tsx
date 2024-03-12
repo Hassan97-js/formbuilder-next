@@ -27,7 +27,7 @@ import {
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 
-import { createForm } from "@/lib/form.actions";
+import { createForm } from "@/utils/actions/builder";
 import {
   createFormSchema,
   type TCreateForm
@@ -46,7 +46,6 @@ function CreateFormButton() {
 
   async function handleCreateForm(values: TCreateForm) {
     try {
-      // const formId = await createForm(values);
       await createForm(values);
 
       toast.success("Form has been created", {
@@ -57,7 +56,6 @@ function CreateFormButton() {
       setIsOpen(false);
 
       form.reset();
-      // router.push(`/builder/${formId}`);
     } catch (error) {
       if (error instanceof Error) {
         return toast.error(error.message, {

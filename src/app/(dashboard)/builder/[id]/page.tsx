@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 
 import FormBuilder from "@/components/builder/form-builder";
 
-// import { getFormById } from "@/actions/form.actions";
+import { getFormById } from "@/utils/actions/builder";
 
 type TProps = {
   params: {
@@ -10,16 +10,14 @@ type TProps = {
   };
 };
 
-async function FormBuilderByIdPage({ params: { id } }: TProps) {
-  // const form = await getFormById(id);
+async function FormBuilderPage({ params: { id } }: TProps) {
+  const form = await getFormById(id);
 
-  // if (!form) {
-  //   return notFound();
-  // }
+  if (!form) {
+    return notFound();
+  }
 
-  // return <FormBuilder form={form} />;
-
-  return <div>Form Builder</div>;
+  return <FormBuilder form={form} />;
 }
 
-export default FormBuilderByIdPage;
+export default FormBuilderPage;

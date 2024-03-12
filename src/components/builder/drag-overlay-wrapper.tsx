@@ -25,15 +25,17 @@ function DragOverlayWrapper() {
   const current = draggedItem?.data?.current;
   const isDesignerElement = current?.isDesignerButtonElement;
 
-  let node = <div>Node drag overlay</div>;
+  let dragOverlayElement = <div>Drag overlay</div>;
 
   if (isDesignerElement) {
     const type = draggedItem?.data?.current?.type as TFormBuilderElementTypes;
 
-    node = <SidebarButtonDragOverlay formElement={FormBuilderElements[type]} />;
+    dragOverlayElement = (
+      <SidebarButtonDragOverlay formElement={FormBuilderElements[type]} />
+    );
   }
 
-  return <DragOverlay>{node}</DragOverlay>;
+  return <DragOverlay>{dragOverlayElement}</DragOverlay>;
 }
 
 export default DragOverlayWrapper;

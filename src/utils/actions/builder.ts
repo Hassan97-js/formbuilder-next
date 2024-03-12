@@ -2,162 +2,157 @@
 
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 
-import prisma from "@/lib/prisma";
+import db from "@/utils/prisma";
+
 import {
   createFormSchema,
   type TCreateForm
 } from "@/constants/validators/form.validator";
 
-// export async function getFormStats() {
-//   noStore();
+import { getCurrentUser } from "../user";
 
-//   const user = await getCurrentUser();
+export async function getFormStats() {
+  noStore();
 
-//   if (!user) {
-//     throw new Error("Unauthorized");
-//   }
+  const user = await getCurrentUser();
 
-//   const stats = await prisma?.form.aggregate({
-//     _sum: {
-//       visits: true,
-//       submissions: true
-//     },
-//     where: {
-//       userId: user.id
-//     }
-//   });
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
 
-//   const visits = stats?._sum.visits || 0;
-//   const submissions = stats?._sum.submissions || 0;
+  const stats = await prisma?.form.aggregate({
+    _sum: {
+      visits: true,
+      submissions: true
+    },
+    where: {
+      userId: user.id
+    }
+  });
 
-//   let submissionsRate = 0;
-//   let bounceRate = 0;
+  const visits = stats?._sum.visits || 0;
+  const submissions = stats?._sum.submissions || 0;
 
-//   if (visits > 0) {
-//     submissionsRate = Math.round((submissions / visits) * 100);
-//   }
+  let submissionsRate = 0;
+  let bounceRate = 0;
 
-//   if (submissionsRate > 0) {
-//     bounceRate = 100 - submissionsRate;
-//   }
+  if (visits > 0) {
+    submissionsRate = Math.round((submissions / visits) * 100);
+  }
 
-//   return {
-//     submissions,
-//     visits,
-//     submissionsRate,
-//     bounceRate
-//   };
-// }
+  if (submissionsRate > 0) {
+    bounceRate = 100 - submissionsRate;
+  }
 
-// export async function createForm(values: TCreateForm) {
-//   noStore();
+  return {
+    submissions,
+    visits,
+    submissionsRate,
+    bounceRate
+  };
+}
 
-//   try {
-//     const parsedValues = createFormSchema.safeParse(values);
+export async function createForm(values: TCreateForm) {
+  try {
+    const parsedValues = createFormSchema.safeParse(values);
 
-//     if (!parsedValues.success) {
-//       console.log(parsedValues.error.flatten());
-//       throw new Error("Invalid create form inputs");
-//     }
+    if (!parsedValues.success) {
+      console.log(parsedValues.error.flatten());
+      throw new Error("Invalid create form inputs");
+    }
 
-//     const user = await getCurrentUser();
+    const user = await getCurrentUser();
 
-//     if (!user) {
-//       throw new Error("Unauthorized");
-//     }
+    if (!user) {
+      throw new Error("Unauthorized");
+    }
 
-//     const { name, description } = values;
+    const { name, description } = parsedValues.data;
 
-//     const form = await prisma.form.findFirst({
-//       where: {
-//         userId: user.id,
-//         name: parsedValues.data.name
-//       }
-//     });
+    const form = await db.form.findFirst({
+      where: {
+        userId: user.id,
+        name
+      }
+    });
 
-//     if (form) {
-//       throw new Error("Form name must be unique");
-//     }
+    if (form) {
+      throw new Error("Form name must be unique");
+    }
 
-//     const newForm = await prisma.form.create({
-//       data: {
-//         userId: user.id,
-//         name,
-//         description
-//       }
-//     });
+    const newForm = await db.form.create({
+      data: {
+        userId: user.id,
+        name,
+        description
+      }
+    });
 
-//     if (!newForm) {
-//       throw new Error("Could not create the form");
-//     }
+    if (!newForm) {
+      throw new Error("Could not create the form");
+    }
 
-//     revalidatePath("/");
+    revalidatePath("/");
 
-//     return newForm.id;
-//   } catch (error) {
-//     console.error(error);
-//     if (error instanceof Error) {
-//       throw error;
-//     }
+    return newForm.id;
+  } catch (error) {
+    console.error(error);
+    if (error instanceof Error) {
+      throw error;
+    }
 
-//     throw new Error("Internal Server Error");
-//   }
-// }
+    throw new Error("Internal Server Error");
+  }
+}
 
-// export async function getForms() {
-//   noStore();
+export async function getForms() {
+  noStore();
 
-//   try {
-//     const user = await getCurrentUser();
+  try {
+    const user = await getCurrentUser();
 
-//     if (!user) {
-//       throw new Error("Unauthorized");
-//     }
+    if (!user) {
+      throw new Error("Unauthorized");
+    }
 
-//     const forms = await prisma.form.findMany({
-//       where: {
-//         userId: user.id
-//       },
-//       orderBy: {
-//         createdAt: "desc"
-//       }
-//     });
+    const forms = await db.form.findMany({
+      where: {
+        userId: user.id
+      },
+      orderBy: {
+        createdAt: "desc"
+      }
+    });
 
-//     return forms;
-//   } catch (error) {
-//     console.error(error);
+    return forms;
+  } catch (error) {
+    console.error(error);
 
-//     throw new Error("Internal Server Error");
-//   }
-// }
+    throw new Error("Internal Server Error");
+  }
+}
 
-// export async function getFormById(id: string) {
-//   noStore();
+export async function getFormById(id: string) {
+  noStore();
 
-//   try {
-//     const user = await getCurrentUser();
+  try {
+    const user = await getCurrentUser();
 
-//     if (!user) {
-//       throw new Error("Unauthorized");
-//     }
+    if (!user) {
+      throw new Error("Unauthorized");
+    }
 
-//     // await new Promise((res) =>
-//     //   setTimeout(() => {
-//     //     res(null);
-//     //   }, 4000)
-//     // );
+    const form = await db.form.findUnique({
+      where: {
+        userId: user.id,
+        id
+      }
+    });
 
-//     const form = await prisma.form.findUnique({
-//       where: {
-//         userId: user.id,
-//         id
-//       }
-//     });
+    return form;
+  } catch (error) {
+    console.error(error);
 
-//     return form;
-//   } catch (error) {
-//     console.error(error);
-
-//     throw new Error("Internal Server Error");
-//   }
-// }
+    throw new Error("Internal Server Error");
+  }
+}

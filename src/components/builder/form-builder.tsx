@@ -10,7 +10,7 @@ import SaveFormButton from "../buttons/save-form-button";
 import PublishFormButton from "../buttons/publish-form-button";
 import DragOverlayWrapper from "./drag-overlay-wrapper";
 
-import { DesignerContextProvider } from "@/context/designer-context";
+import { DesignerProvider } from "@/context/designer-context";
 
 type TProps = {
   form: TForm;
@@ -28,6 +28,7 @@ function FormBuilder({ form }: TProps) {
         </h2>
         <div className="flex items-center gap-2">
           <PreviewDialogButton />
+
           {!form.published && (
             <>
               <SaveFormButton />
@@ -36,12 +37,13 @@ function FormBuilder({ form }: TProps) {
           )}
         </div>
       </nav>
-      <div className="flex w-full flex-1 items-center justify-center relative h-[12.5rem] bg-accent bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)]">
+
+      <div className="flex w-full flex-1 items-center justify-center relative h-[12.5rem] bg-accent bg-[url(/paper-dark.svg)]">
         <DndContext id={id}>
-          <DesignerContextProvider>
+          <DesignerProvider>
             <Designer />
             <DragOverlayWrapper />
-          </DesignerContextProvider>
+          </DesignerProvider>
         </DndContext>
       </div>
     </div>

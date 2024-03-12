@@ -4,25 +4,20 @@ import { TbArrowBounce, TbClick } from "react-icons/tb";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
 
-import { getFormStats } from "@/lib/form.actions";
+import { getFormStats } from "@/utils/actions/builder";
 
 export async function StatsCardWrapper() {
   const stats = await getFormStats();
 
-  return (
-    <StatsCards
-      loading={false}
-      data={stats}
-    />
-  );
+  return <StatsCards data={stats} />;
 }
 
 type TStatsCardsProps = {
-  loading: boolean;
+  loading?: boolean;
   data?: Awaited<ReturnType<typeof getFormStats>>;
 };
 
-export async function StatsCards({ loading, data }: TStatsCardsProps) {
+export async function StatsCards({ loading = false, data }: TStatsCardsProps) {
   return (
     <div className="w-full pt-8 gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       <StatsCard
@@ -66,7 +61,7 @@ type TStatsCardProps = {
   icon: JSX.Element;
   description: string;
   value?: string;
-  loading: boolean;
+  loading?: boolean;
   className?: string;
 };
 
@@ -75,7 +70,7 @@ export function StatsCard({
   description,
   icon,
   value,
-  loading,
+  loading = false,
   className
 }: TStatsCardProps) {
   return (

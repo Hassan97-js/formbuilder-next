@@ -15,7 +15,7 @@ type TDesignerContext = {
 
 export const DesignerContext = createContext<TDesignerContext | null>(null);
 
-export function DesignerContextProvider({ children }: TProps) {
+export function DesignerProvider({ children }: TProps) {
   const [elements, setElements] = useState<TDesignerFormElement[]>([]);
 
   function handleAddElement(element: TDesignerFormElement) {
